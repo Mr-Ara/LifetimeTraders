@@ -1,3 +1,5 @@
+
+require('express-async-errors')
 const express = require('express');
 const app = express();
 
@@ -5,6 +7,7 @@ const mongoose = require('mongoose')
 const debug = require('debug')("app:main")
 const config = require('config')
 const router = require('./src/routes/index')
+const winston = require('winston')
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -14,6 +17,8 @@ mongoose
 .connect(config.get('db.address'))
 .then(()=>{debug("connected to MongoDb")})
 .catch(()=>{debug("could not connect to mongoDb")})
+
+winston.add(new winston.transports.File({filename:'logfile.log'}))
 
 app.use('/api',router)
 

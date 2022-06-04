@@ -26,22 +26,24 @@ module.exports = new ( class extends controller{
   };
 
   async login(req,res){
-    const user = await this.User.findOne({email : req.body.email})
-    if(!user){
-      return this.response({
-        res,code:400,message:'invalid username or password'
+
+
+  const user = await this.User.findOne({email : req.body.email})
+  if(!user){
+    return this.response({
+      res,code:400,message:'invalid username or password'
+  })
+  }
+
+  const isValid = await bcrypt.compare(req.body.password,user.password);
+  if(!isValid){
+    return this.response({
+      res, code:400 , message:'the username or password is invalid'
     })
-    }
+  }
 
-    const isValid = await bcrypt.compare(req.body.password,user.password);
-    if(!isValid){
-      return this.response({
-        res, code:400 , message:'the username or password is invalid'
-      })
-    }
-
-    const token = jwt.sign({_id:user.id},config.get("jwt-key"));
-    this.response({res, message:'User logged in successfuly' , data:{token}})
+  const token = jwt.sign({_id:user.id},config.get("jwt-key"));
+  this.response({res, message:'User logged in successfuly' , data:{token}})
 
     
   }
