@@ -1,7 +1,8 @@
 const controller = require('./../controller')
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
-
+const config = require('config')
+const jwt = require('jsonwebtoken')
 module.exports = new ( class extends controller{
 
   async register(req,res){
@@ -25,7 +26,24 @@ module.exports = new ( class extends controller{
   };
 
   async login(req,res){
-    res.send('login')
+    const user = await this.User.findOne({email : req.body.email})
+    if(!user){
+      return this.response({
+        res,code:400,message:'invalid username or password'
+    })
+    }
+
+    const isValid = await bcrypt.compare(req.body.password,user.password);
+    if(!isValid){
+      return this.response({
+        res, code:400 , message:'the username or password is invalid'
+      })
+    }
+
+    const token = jwt.sign({_id:user.id},config.get("jwt-key"));
+    this.response({res, message:'User logged in successfuly' , data:{token}})
+
+    
   }
 
 
