@@ -1,28 +1,20 @@
-
-require('express-async-errors')
-const express = require('express');
+require("express-async-errors");
+const express = require("express");
 const app = express();
 
-const mongoose = require('mongoose')
-const debug = require('debug')("app:main")
-const config = require('config')
-const router = require('./src/routes/index')
-const winston = require('winston')
+const mongoose = require("mongoose");
+const debug = require("debug")("app:main");
+const config = require("config");
+const router = require("./src/routes/index");
+const winston = require("winston");
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use(express.static('public'));
+require("./startup/config")(app, express);
+require("./startup/db")();
+require("./startup/logging")();
 
-mongoose
-.connect(config.get('db.address'))
-.then(()=>{debug("connected to MongoDb")})
-.catch(()=>{debug("could not connect to mongoDb")})
-
-winston.add(new winston.transports.File({filename:'logfile.log'}))
-
-app.use('/api',router)
+app.use("/api", router);
 
 const port = process.env.PORT || 3000;
-app.listen(port,()=>{console.log(`listening to port ${port}`)});
-
-
+app.listen(port, () => {
+  console.log(`listening to port ${port}`);
+});
