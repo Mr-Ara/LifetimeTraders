@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.main{
+    width: 100%;
+    background-image: url("../../src/img/bg5.jpg");
+    background-size: cover; /* or contain depending on what you want */
+    margin:0;
+    padding:0;
+   height: 1000px;
+   position: fixed;
+   background-position: 0px 0px;
+   background-repeat: repeat-x;
+   animation: animatedBackground 30s linear infinite alternate;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
