@@ -236,3 +236,7 @@
 	 -webkit-transition: all 0.3s ease;
 }
  
+.alert{
+z-index: 1;
+
+}
