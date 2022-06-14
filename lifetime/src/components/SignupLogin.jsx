@@ -1,7 +1,7 @@
 import { Component } from "react";
 import "../styles/signuplogin.css";
 import * as yup from "yup";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 class SignupLogin extends Component {
@@ -12,6 +12,7 @@ class SignupLogin extends Component {
       username: "",
     },
     error2: [],
+		// sending: false
   };
 
   schema = yup.object().shape({
@@ -35,16 +36,28 @@ class SignupLogin extends Component {
   };
 
   handleSubmit1 = async (e) => {
-		e.preventDefault()
+    e.preventDefault();
     const result = await this.validate();
-		const response = await axios('http://127.0.0.1:3000/api/auth/register',result)
-		console.log(response)
+		console.log(result);
+		// this.setState({sending:true})
+    const response = await axios.get(
+      "http://127.0.0.1:3001/api/auth/register",
+      result
+    );
+		// this.setState({sending:false})
+    console.log(response);
   };
-	handleSubmit2 = async (e) => {
-		e.preventDefault()
+  handleSubmit2 = async (e) => {
+    e.preventDefault();
     const result = await this.validate();
-		const response = await axios('http://localhost:3000/api/auth/login',result)
-		console.log(response)
+		console.log(result);
+		// this.setState({sending:true})
+    const response = await axios.post(
+      "http://localhost:3001/api/auth/login",
+      result
+    );
+		// this.setState({sending:false})
+    console.log(response);
   };
 
   handleChange = async (e) => {
@@ -60,16 +73,16 @@ class SignupLogin extends Component {
     return (
       <>
         <div className="mainsign">
+          {this.checking() && (
+            <div className="alert alert-primary " id="alert">
+              <ul>
+                {this.state.error2.map((err, i) => (
+                  <li key={i}>{err}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="form-structor">
-            {this.checking() && (
-              <div className="alert alert-primary " id="alert">
-                <ul>
-                  {this.state.error2.map((err, i) => (
-                    <li key={i}>{err}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
             <div className="signup">
               <h2 className="form-title" id="signup" onClick={this.signupEvent}>
                 <span>or</span>Sign up
@@ -93,6 +106,7 @@ class SignupLogin extends Component {
                 />
                 <input
                   type="password"
+									
                   className="input"
                   placeholder="Password"
                   value={password}
@@ -127,7 +141,7 @@ class SignupLogin extends Component {
                     name="password"
                   />
                 </div>
-                <button className="submit-btn" onClick={this.handleSubmit2}>
+                <button className="submit-btn" onClick={this.handleSubmit2} >
                   Log in
                 </button>
               </div>
