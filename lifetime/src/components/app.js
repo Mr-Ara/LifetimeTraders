@@ -1,15 +1,11 @@
 import { Component } from "react";
 import React from "react";
-import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import MarketPrice from "./marketprice";
 import "../styles/app.css";
 import NavBar from "./navbar";
-
+import MyCarousel from "./MyCarousel";
+import FreeSignal from "./freeSignal";
+import Footer from "./footer";
 
 class App extends Component {
   render() {
@@ -17,6 +13,10 @@ class App extends Component {
       <>
         <div className="main">
           <NavBar/>
+          <MarketPrice/>
+          <MyCarousel/>
+          <FreeSignal/>
+          <Footer/>
         </div>
       </>
     );

@@ -3,24 +3,26 @@
   padding: 0;
 }
 
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0vh 0vh;
+  }
+  to {
+    background-position: 100vh 0vh;
+  }
+}
+
 .main{
     width: 100%;
     background-image: url("../../src/img/bg5.jpg");
     background-size: cover; /* or contain depending on what you want */
     margin:0;
     padding:0;
-   height: 1000px;
-   position: fixed;
-   background-position: 0px 0px;
+   height: 100vh;
+   position: absolute;
+   background-position: 0vh 0vh;
    background-repeat: repeat-x;
-   animation: animatedBackground 30s linear infinite alternate;
+   animation: animatedBackground 50s linear infinite alternate;
 }
 
-@keyframes animatedBackground {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 100% 0;
-  }
-}

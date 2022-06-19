@@ -21,9 +21,9 @@ class NavBar extends Component {
           </div>
           <div className="left-options">
             
-            <span id="binance">Binance Verification</span>
+            <span id="binance" > Binance Verification</span>
             <span id="vip">VIP </span>
-            <span id="recovery">Recovery Assets</span>
+            <span id="recovery">Assets Recovery </span>
           </div>
           <div className="logo">
             <h1>LifeTime Traders</h1>
